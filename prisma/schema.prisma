@@ -11,12 +11,60 @@ datasource db {
 }
 
 model User {
-  id        String      @id @default(uuid())
+  id        String    @id @default(uuid())
   name      String
-  email     String      @unique
+  email     String    @unique
   password  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  Despes    Despesa[]
+  Ganho     Ganho[]
+  origem    Origem[]
 
   @@map("users")
+}
+
+model Despesa {
+  id          String   @id @default(uuid())
+  name        String
+  description String
+  value       Float
+  fixo        Boolean
+  User        User     @relation(fields: [userId], references: [id])
+  userId      String
+  Origem      Origem   @relation(fields: [origemId], references: [id])
+  origemId    String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("despesas")
+}
+
+model Ganho {
+  id          String   @id @default(uuid())
+  name        String
+  description String
+  value       Float
+  fixo        Boolean
+  User        User     @relation(fields: [userId], references: [id])
+  userId      String
+  Origem      Origem   @relation(fields: [origemId], references: [id])
+  origemId    String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("ganhos")
+}
+
+model Origem {
+  id          String    @id @default(uuid())
+  name        String
+  User        User      @relation(fields: [userId], references: [id])
+  userId      String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  Ganho       Ganho[]
+  Despesa     Despesa[]
+
+  @@map("origens")
 }
