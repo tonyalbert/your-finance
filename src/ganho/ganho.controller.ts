@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { GanhoService } from './ganho.service';
 import { CreateGanhoDto } from './dto/create-ganho.dto';
 import { UpdateGanhoDto } from './dto/update-ganho.dto';
+import { UUID } from 'crypto';
 
 @Controller('ganho')
 export class GanhoController {
@@ -13,13 +14,13 @@ export class GanhoController {
   }
 
   @Get()
-  findAll() {
-    return this.ganhoService.findAll();
+  findAll(@Body('userId') userId: UUID) {
+    return this.ganhoService.findAll(userId);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.ganhoService.findOne(+id);
+  findOne(@Param('id') id: UUID) {
+    return this.ganhoService.findOne(id);
   }
 
   @Patch(':id')
@@ -28,7 +29,7 @@ export class GanhoController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.ganhoService.remove(+id);
+  remove(@Param('id') id: UUID) {
+    return this.ganhoService.remove(id);
   }
 }
