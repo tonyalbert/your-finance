@@ -1,6 +1,6 @@
 # Controle Financeiro App
 
-Este é o repositório para o projeto de Controle Financeiro App. O objetivo deste aplicativo é ajudar os usuários a gerenciar suas finanças pessoais de forma eficaz, permitindo o acompanhamento de despesas, receitas e o acesso a informações financeiras úteis.
+Este é o repositório para o projeto do Your Finance. O objetivo deste aplicativo é ajudar os usuários a gerenciar suas finanças pessoais de forma eficaz, permitindo o acompanhamento de despesas, receitas e o acesso a informações financeiras úteis.
 
 ## Visão Geral
 
