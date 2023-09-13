@@ -16,9 +16,9 @@ export class CreateDespesaDto {
     @IsNotEmpty()
     fixo: boolean;
 
-    @IsUUID()
+    /* @IsUUID()
     @IsNotEmpty()
-    userId: string
+    userId: string */
 
     @IsUUID()
     @IsNotEmpty()

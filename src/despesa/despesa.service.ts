@@ -3,10 +3,12 @@ import { CreateDespesaDto } from './dto/create-despesa.dto';
 import { UpdateDespesaDto } from './dto/update-despesa.dto';
 import prisma from 'src/prisma/Prisma';
 import { UUID } from 'crypto';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class DespesaService {
-  async create(createDespesaDto: CreateDespesaDto) {
+  constructor(private readonly jwtService: JwtService) {}
+  async create(createDespesaDto: CreateDespesaDto, userId: UUID) {
 
     const despesa = await prisma.despesa.create({
       data: {
@@ -14,7 +16,7 @@ export class DespesaService {
         description: createDespesaDto.description,
         value: createDespesaDto.value,
         fixo: createDespesaDto.fixo,
-        userId: createDespesaDto.userId,
+        userId: userId,
         origemId: createDespesaDto.origemId
       }
     })
@@ -22,8 +24,12 @@ export class DespesaService {
     return despesa;
   }
 
-  findAll() {
-    const despesas = prisma.despesa.findMany();
+  findAll(userId: UUID) {
+    const despesas = prisma.despesa.findMany({
+      where: {
+        userId: userId
+      }
+    });
     return despesas;
   }
 
@@ -47,5 +53,16 @@ export class DespesaService {
       }
     })
     return despesa;
+  }
+
+  extractPayload(token: string) {
+    try {
+      const payload = this.jwtService.verify(token);
+
+      return payload;
+    } catch (error) {
+      // Trate erros de validação do JWT aqui
+      return { erro: 'Token JWT inválido' };
+    }
   }
 }
