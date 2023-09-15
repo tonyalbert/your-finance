@@ -18,7 +18,10 @@ export class UserService {
     });
 
     if (isEmailExist) {
-      return "Email already exist";
+      return {
+        error: true,
+        message: 'Email já cadastrado'
+      };
     }
 
     const salt = await bcrypt.genSalt();
